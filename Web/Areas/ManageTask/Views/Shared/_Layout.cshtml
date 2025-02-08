@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - Dashboard Task Flow</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Custom CSS for Sidebar -->
+    <link rel="stylesheet" href="~/Web.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <!-- Mobile Toggle Button -->
+    <button class="btn btn-dark d-block d-md-none m-3" id="sidebarToggle">
+        <i class="bi bi-list"></i> Menu
+    </button>
+
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <!-- Close Button (Mobile Only) -->
+  @*           <span class="close-btn d-block d-md-none text-center" id="closeSidebar">
+                <i class="bi bi-arrow-left"></i>
+                Close Menu
+                <br />
+                <br />
+
+
+            </span> *@
+
+            <!-- Project Name -->
+            <h4 class="text-center mb-4">Task Flow</h4>
+
+            <!-- Menu Items -->
+            <ul class="list-unstyled">
+                <!-- Dashboard -->
+                <li>
+                    <a href="#">
+                        <i class="bi bi-speedometer2 me-2"></i>Dashboard
+                    </a>
+                </li>
+
+                <!-- Tasks -->
+                <li>
+                    <a href="#tasks" data-bs-toggle="collapse" >
+                        <i class="bi bi-list-task me-2"></i>Tasks
+                    </a>
+                    <div class="collapse" id="tasks">
+                        <ul class="list-unstyled ps-4">
+                            <li><a href="#">My Tasks</a></li>
+                            <li><a href="#">Team Tasks</a></li>
+                            <li><a href="#">Completed Tasks</a></li>
+                        </ul>
+                    </div>
+                </li>
+
+                <!-- Calendar -->
+                <li>
+                    <a href="#">
+                        <i class="bi bi-calendar me-2"></i>Calendar
+                    </a>
+                </li>
+
+                <!-- Reports -->
+                <li>
+                    <a href="#reports" data-bs-toggle="collapse">
+                        <i class="bi bi-bar-chart-line me-2"></i>Reports
+                    </a>
+                    <div class="collapse" id="reports">
+                        <ul class="list-unstyled ps-4">
+                            <li><a href="#">Task Completion</a></li>
+                            <li><a href="#">Team Performance</a></li>
+                            <li><a href="#">Custom Reports</a></li>
+                        </ul>
+                    </div>
+                </li>
+
+                <!-- Settings -->
+                <li>
+                    <a href="#">
+                        <i class="bi bi-gear me-2"></i>Settings
+                    </a>
+                </li>
+
+                <!-- Logout -->
+                <li>
+                    <a href="#">
+                        <i class="bi bi-box-arrow-left me-2"></i>Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content" id="mainContent">
+            @RenderBody()
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    <!-- Custom JS for Toggle Sidebar -->
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('mainContent');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        // const closeSidebar = document.getElementById('closeSidebar');
+
+        // Toggle Sidebar on Menu Button Click
+        sidebarToggle.addEventListener('click', function () {
+            sidebar.classList.toggle('active');
+            mainContent.style.marginLeft = sidebar.classList.contains('active') ? '250px' : '0';
+        });
+
+        // // Close Sidebar on Close Button Click
+        // closeSidebar.addEventListener('click', function () {
+        //     sidebar.classList.remove('active');
+        //     mainContent.style.marginLeft = '0';
+        // });
+
+        document.addEventListener('click', function (event) {
+            const sidebar = document.getElementById('sidebar');
+            const sidebarToggle = document.getElementById('sidebarToggle');
+
+            // Check if the click is outside the sidebar and the toggle button
+            if (!sidebar.contains(event.target) && !sidebarToggle.contains(event.target)) {
+                sidebar.classList.remove('active'); // Close the sidebar
+                document.getElementById('mainContent').style.marginLeft = '0'; // Adjust main content
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+﻿@using Application.DTOs
+@using Application.Interface
+@using Domain.Entities
+@using Microsoft.AspNetCore.Identity
+@inject IUser user;
+@inject UserManager<ApplicationUser> _userManager;
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="text-center">
+    <img class="img-fluid table-responsive" src="~/img/taskflowlogo.png" />
+
+    <h1 class="display-3">Welcome to <span style="font-weight:bold">Task Flow</span> Management</h1>
+    <h4>Efficiently Manage Your Tasks and Boost Productivity</h4>
+    <p>Task Flow is your ultimate tool for organizing, tracking, and completing tasks with ease.<br />Whether you're managing personal to-dos or team projects, Task Flow simplifies your workflow.</p>
+    <br />
+    <div class="d-flex justify-content-center gap-3">
+        <a href="/Identity/Account/Register" class="btn btn-primary">GetStart</a>
+        <a class="btn btn-secondary">Learn more</a>
+    </div>
+</div>
+
+
+
+@section Scripts {
+
+
+
+}
+
