@@ -1,101 +1,111 @@
-# TaskFlow
-قابلیت های در حال توسعه:
-1. مدیریت تسک‌ها (Task Management):
-ایجاد تسک: امکان ایجاد تسک‌های جدید با عنوان، توضیحات، تاریخ شروع و پایان.
+Task Management (Under Development):
 
-ویرایش تسک: امکان ویرایش تسک‌های موجود.
+Creating Tasks: Ability to create new tasks with titles, descriptions, start and end dates.
 
-حذف تسک: امکان حذف تسک‌ها.
+Editing Tasks: Ability to edit existing tasks.
 
-تغییر وضعیت تسک: تغییر وضعیت تسک‌ها (مثلاً: To Do, In Progress, Done).
+Deleting Tasks: Ability to delete tasks.
 
-اولویت‌بندی تسک‌ها: تعیین اولویت برای تسک‌ها (مثلاً: Low, Medium, High).
+Changing Task Status: Changing task status (e.g., To Do, In Progress, Done).
 
-تسک‌های تکراری: امکان ایجاد تسک‌های تکراری با بازه‌های زمانی مشخص.
+Task Prioritization: Setting priority for tasks (e.g., Low, Medium, High).
 
-2. مدیریت پروژه‌ها (Project Management):
-ایجاد پروژه: امکان ایجاد پروژه‌های جدید.
+Recurring Tasks: Ability to create recurring tasks with specified intervals.
 
-ویرایش پروژه: ویرایش اطلاعات پروژه.
+Project Management:
 
-حذف پروژه: حذف پروژه‌ها.
+Creating Projects: Ability to create new projects.
 
-تسک‌های پروژه: نمایش تمامی تسک‌های مرتبط با یک پروژه.
+Editing Projects: Editing project information.
 
-پیشرفت پروژه: نمایش درصد پیشرفت پروژه بر اساس تسک‌های انجام‌شده.
+Deleting Projects: Deleting projects.
 
-3. تقویم و زمان‌بندی (Calendar & Scheduling):
-تقویم تسک‌ها: نمایش تسک‌ها در یک تقویم تعاملی.
+Project Tasks: Displaying all tasks related to a project.
 
-زمان‌بندی: تعیین تاریخ شروع و پایان برای تسک‌ها.
+Project Progress: Displaying the project's progress percentage based on completed tasks.
 
-یادآوری: ارسال نوتیفیکیشن یا ایمیل برای یادآوری تسک‌ها.
+Calendar & Scheduling:
 
-تکرار خودکار: تنظیم تسک‌های تکرار شونده (مثلاً روزانه، هفتگی، ماهانه).
+Task Calendar: Displaying tasks in an interactive calendar.
 
-4. همکاری تیمی (Team Collaboration):
-تخصیص تسک: امکان تخصیص تسک‌ها به اعضای تیم.
+Scheduling: Setting start and end dates for tasks.
 
-دیدگاه‌ها (Comments): امکان اضافه کردن دیدگاه به تسک‌ها.
+Reminders: Sending notifications or emails for task reminders.
 
-فایل‌های پیوست: امکان افزودن فایل‌های پیوست به تسک‌ها.
+Automatic Recurrence: Setting recurring tasks (e.g., daily, weekly, monthly).
 
-اعلان‌ها: ارسال اعلان‌ها برای اعضای تیم در مورد تغییرات تسک‌ها.
+Team Collaboration:
 
-5. گزارش‌گیری و تحلیل (Reporting & Analytics):
-گزارش پیشرفت: نمایش گزارش پیشرفت تسک‌ها و پروژه‌ها.
+Task Assignment: Ability to assign tasks to team members.
 
-تحلیل زمان: تحلیل زمان صرف‌شده برای تسک‌ها.
+Comments: Ability to add comments to tasks.
 
-گزارش عملکرد تیم: نمایش عملکرد اعضای تیم بر اساس تسک‌های انجام‌شده.
+Attachments: Ability to add attachments to tasks.
 
-خروجی‌ها: امکان خروجی گرفتن از گزارش‌ها به فرمت‌های مختلف (PDF, Excel).
+Notifications: Sending notifications to team members about task updates.
 
-6. تنظیمات و شخصی‌سازی (Settings & Customization):
-پروفایل کاربری: امکان ویرایش اطلاعات کاربری.
+Reporting & Analytics:
 
-تنظیمات نوتیفیکیشن: شخصی‌سازی نوتیفیکیشن‌ها.
+Progress Reports: Displaying progress reports for tasks and projects.
 
-قالب‌های تسک: ایجاد قالب‌های تسک برای استفاده سریع.
+Time Analysis: Analyzing time spent on tasks.
 
-زبان و منطقه زمانی: پشتیبانی از زبان‌ها و منطقه‌های زمانی مختلف.
+Team Performance Reports: Displaying team members' performance based on completed tasks.
 
-7. امنیت و دسترسی (Security & Access Control):
-احراز هویت: سیستم ورود و ثبت‌نام کاربران.
+Exporting Reports: Ability to export reports in various formats (PDF, Excel).
 
-سطوح دسترسی: تعیین سطوح دسترسی برای کاربران (مثلاً Admin, Member, Viewer).
+Settings & Customization:
 
-رمزنگاری داده‌ها: اطمینان از امنیت داده‌ها.
+User Profile: Ability to edit user information.
 
-8. یکپارچه‌سازی (Integrations):
-یکپارچه‌سازی با ابزارهای دیگر: امکان اتصال به ابزارهایی مانند Google Calendar, Slack, Trello و غیره.
+Notification Settings: Customizing notifications.
 
-API: ارائه API برای توسعه‌دهندگان جهت یکپارچه‌سازی با سیستم‌های دیگر.
+Task Templates: Creating task templates for quick use.
 
-9. رابط کاربری (User Interface):
-رابط کاربری واکنش‌گرا: طراحی مناسب برای دستگاه‌های مختلف (موبایل، تبلت، دسکتاپ).
+Language & Time Zone: Supporting different languages and time zones.
 
-تم‌های رنگی: امکان تغییر تم‌های رنگی رابط کاربری.
+Security & Access Control:
 
-درگ و دراپ: امکان جابجایی تسک‌ها با درگ و دراپ.
+Authentication: User login and registration system.
 
-10. پشتیبانی از چند پلتفرم (Multi-Platform Support):
-وب‌اپلیکیشن: دسترسی از طریق مرورگر.
+Access Levels: Setting access levels for users (e.g., Admin, Member, Viewer).
 
-اپلیکیشن موبایل: پشتیبانی از سیستم‌های عامل iOS و Android.
+Data Encryption: Ensuring data security.
 
-دسکتاپ: پشتیبانی از نسخه دسکتاپ برای ویندوز، macOS و لینوکس.
+Integrations:
 
-11. قابلیت‌های پیشرفته (Advanced Features):
-هوش مصنوعی: پیشنهاد تسک‌ها بر اساس رفتار کاربر.
+Integration with Other Tools: Ability to connect with tools like Google Calendar, Slack, Trello, etc.
 
-اتوماسیون: ایجاد گردش کار خودکار (Workflow Automation).
+API: Providing API for developers to integrate with other systems.
 
-گفتگوهای تیمی: امکان چت بین اعضای تیم در داخل پروژه.
+User Interface:
 
-12. پشتیبانی و آموزش (Support & Training):
-مستندات: ارائه مستندات کامل برای کاربران.
+Responsive Design: Suitable design for various devices (mobile, tablet, desktop).
 
-پشتیبانی آنلاین: ارائه پشتیبانی از طریق چت یا تیکت.
+Color Themes: Ability to change the color themes of the user interface.
 
-آموزش: ویدیوها و آموزش‌های تعاملی برای کاربران جدید.
+Drag and Drop: Ability to move tasks using drag and drop.
+
+Multi-Platform Support:
+
+Web Application: Access via web browser.
+
+Mobile Application: Support for iOS and Android operating systems.
+
+Desktop: Support for desktop versions on Windows, macOS, and Linux.
+
+Advanced Features:
+
+Artificial Intelligence: Task suggestions based on user behavior.
+
+Automation: Creating automated workflows (Workflow Automation).
+
+Team Chat: Ability to chat between team members within the project.
+
+Support & Training:
+
+Documentation: Providing complete documentation for users.
+
+Online Support: Offering support via chat or ticket system.
+
+Training: Videos and interactive training for new users.
