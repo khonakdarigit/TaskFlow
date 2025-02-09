@@ -40,9 +40,17 @@ button.accept-policy {
 }
 
 .footer {
-  position: absolute;
+  position: unset;
   bottom: 0;
   width: 100%;
   white-space: nowrap;
   line-height: 60px;
 }
+
+.custom-link {
+    text-decoration: none; 
+    color: inherit; 
+}
+    .custom-link:hover {
+        cursor: pointer;
+    }

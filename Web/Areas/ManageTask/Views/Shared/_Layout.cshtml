@@ -31,7 +31,12 @@
             </span> *@
 
             <!-- Project Name -->
-            <h4 class="text-center mb-4">Task Flow</h4>
+            <a href="/ManageTask" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none text-center">
+
+                <img src="~/img/taskflowlogo.png" alt="Logo" class="me-2" width="40" >
+
+                <span class="fs-4">Task Flow</span>
+            </a>
 
             <!-- Menu Items -->
             <ul class="list-unstyled">
@@ -94,7 +99,7 @@
         </div>
 
         <!-- Main Content -->
-        <div class="main-content" id="mainContent">
+        <div class="main-content" id="mainContent">   
             @RenderBody()
         </div>
     </div>
