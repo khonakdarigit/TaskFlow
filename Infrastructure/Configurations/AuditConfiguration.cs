@@ -9,7 +9,7 @@ namespace Infrastructure.Configurations
         public void Configure(EntityTypeBuilder<Audit> builder)
         {
             builder
-               .HasOne(a => a.User)
+                .HasOne(a => a.User)
                 .WithMany(u => u.Audits)
                 .HasForeignKey(a => a.UserId);
         }

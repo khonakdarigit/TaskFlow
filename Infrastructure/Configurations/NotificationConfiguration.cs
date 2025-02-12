@@ -9,7 +9,7 @@ namespace Infrastructure.Configurations
         public void Configure(EntityTypeBuilder<Notification> builder)
         {
             builder
-               .HasOne(n => n.User)
+                .HasOne(n => n.User)
                 .WithMany(u => u.Notifications)
                 .HasForeignKey(n => n.UserId);
         }

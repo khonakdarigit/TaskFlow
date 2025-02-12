@@ -12,7 +12,10 @@ namespace Infrastructure.Data
         {
         }
 
-        public DbSet<UserTask> Tasks { get; set; }
+        public DbSet<Project> Projects { get; set; }
+        public DbSet<TaskItem> Tasks { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Attachment> Attachments { get; set; }
         public DbSet<Log> Logs { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Audit> Audits { get; set; }
@@ -20,8 +23,10 @@ namespace Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-
-            builder.ApplyConfiguration(new UserTaskConfiguration());
+            builder.ApplyConfiguration(new ProjectConfiguration());
+            builder.ApplyConfiguration(new TaskItemConfiguration());
+            builder.ApplyConfiguration(new CommentConfiguration());
+            builder.ApplyConfiguration(new AttachmentConfiguration());
             builder.ApplyConfiguration(new LogConfiguration());
             builder.ApplyConfiguration(new NotificationConfiguration());
             builder.ApplyConfiguration(new AuditConfiguration());
