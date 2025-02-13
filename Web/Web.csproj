@@ -24,7 +24,6 @@
 
 	<ItemGroup>
 		<Folder Include="Areas\ManageTask\Data\" />
-		<Folder Include="Areas\ManageTask\Models\" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -10,9 +10,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Application.Interface;
 using Infrastructure.Services;
-using Application.DTOs.Config;
 using Mapster;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using MapsterMapper;
+using System.Reflection;
+using Application.Services;
 
 namespace Infrastructure
 {
@@ -36,14 +37,11 @@ namespace Infrastructure
 
             services.ConfigureApplicationCookie(options =>
             {
-                options.LoginPath = "/Identity/Account/Login"; 
-                options.AccessDeniedPath = "/Identity/Account/AccessDenied"; 
+                options.LoginPath = "/Identity/Account/Login";
+                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
             });
 
             services.AddDatabaseDeveloperPageExceptionFilter();
-
-            services.AddScoped<IIdentityService, IdentityService>();
-            services.AddScoped<IUser, CurrentUser>();
 
             return services;
         }
@@ -51,18 +49,27 @@ namespace Infrastructure
 
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
         {
+            services.AddScoped<IIdentityService, IdentityService>();
+            services.AddScoped<IUser, CurrentUser>();
 
-            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            //services.AddScoped<IUserFileRepository, UserFileRepository>();
-            //services.AddScoped<IFileShareRepository, FileShareRepository>();
+            services.AddSingleton(config =>
+            {
+                var configTa = new TypeAdapterConfig();
+                configTa.Scan(Assembly.GetExecutingAssembly());
+                return configTa;
+            });
+
+            services.AddScoped<IMapper, ServiceMapper>();
+
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            TypeAdapterConfig.GlobalSettings.Scan(typeof(MappingConfig).Assembly);
+
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<IProjectRepository, ProjectRepository>();
 
 
-            //services.AddScoped<IUserFileService, UserFileService>();
-            //services.AddScoped<IFileShareService, FileShareService>();
+            services.AddScoped<IProjectService, ProjectService>();
 
             return services;
         }
