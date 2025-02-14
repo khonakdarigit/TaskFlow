@@ -20,9 +20,10 @@ namespace Web.Areas.ManageTask.Controllers
             _user = user;
             _projectService = projectService;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            List<ProjectDto> allProject = await _projectService.AllProjectAsync();
+            return View(allProject);
         }
 
         [HttpGet]
@@ -49,10 +50,16 @@ namespace Web.Areas.ManageTask.Controllers
                 };
 
                 var createdProject = await _projectService.CreateProjectAsync(project);
-                return RedirectToAction("Details", new { id = createdProject.Id });
+                return RedirectToAction(nameof(Details), new { id = createdProject.Id });
             }
 
             return View(model);
+        }
+
+        public async Task<IActionResult> Details(Guid Id)
+        {
+            ProjectDto project = await _projectService.GetProjectAsync(Id);
+            return View(project);
         }
     }
 }

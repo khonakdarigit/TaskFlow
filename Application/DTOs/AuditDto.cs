@@ -1,11 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
+﻿
 namespace Application.DTOs
 {
     public class AuditDto
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Action { get; set; }
         public string EntityName { get; set; }
         public Guid EntityId { get; set; }

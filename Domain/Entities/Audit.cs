@@ -5,7 +5,7 @@ namespace Domain.Entities
 {
     public class Audit
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
         public string Action { get; set; }
         public string EntityName { get; set; }
         public Guid EntityId { get; set; }

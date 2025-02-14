@@ -3,9 +3,9 @@ namespace Domain.Entities
 {
     public class Attachment
     {
-        public int Id { get; set; } 
+        public Guid Id { get; set; } =Guid.NewGuid();
         public string FilePath { get; set; } = string.Empty;
-        public int TaskId { get; set; } 
+        public Guid TaskId { get; set; } 
 
         // Navigation Properties
         public TaskItem Task { get; set; } = null!;

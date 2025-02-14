@@ -6,7 +6,7 @@ namespace Domain.Entities
 {
     public class Log
     {
-        public int Id { get; set; } 
+        public Guid Id { get; set; } = Guid.NewGuid();
         public string Message { get; set; }
         public LogLevel Level { get; set; }
         public DateTime Timestamp { get; set; } = DateTime.UtcNow;
