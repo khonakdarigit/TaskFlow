@@ -31,7 +31,6 @@ namespace Web.Areas.ManageTask.Controllers
         {
             var model =new CreateProjectViewModel();
             model.StartDate = DateTime.Now; 
-            model.EndDate = DateTime.Now.AddDays(5);   
             return View(model);
         }
 
@@ -44,7 +43,7 @@ namespace Web.Areas.ManageTask.Controllers
                 {
                     Name = model.Name,
                     Description = model.Description,
-                    StartDate = model.StartDate,
+                    StartDate = model.StartDate.Value,
                     EndDate = model.EndDate,
                     OwnerId=_user.Id
                 };
