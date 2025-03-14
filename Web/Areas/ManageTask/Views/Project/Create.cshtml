@@ -4,35 +4,10 @@
 @{
 	ViewData["Title"] = "Create new project";
 }
-
-<h2>Create Project</h2>
-
-@* <form asp-action="Create" method="post">
-	<div>
-		<label for="Name">Project Name</label>
-		<input type="text" id="Name" name="Name" value="@Model.Name" required />
-	</div>
-	<div>
-		<label for="Description">Description</label>
-		<textarea id="Description" name="Description" required>@Model.Description</textarea>
-	</div>
-	<div>
-		<label for="StartDate">Start Date</label>
-		<input type="date" id="StartDate" name="StartDate" value="@Model.StartDate.ToString("yyyy-MM-dd")" required />
-	</div>
-	<div>
-		<label for="EndDate">End Date</label>
-		<input type="date" id="EndDate" name="EndDate" value="@Model.EndDate.ToString("yyyy-MM-dd")" required />
-	</div>
-	<div>
-		<button type="submit">Create Project</button>
-	</div>
-</form>
- *@
 <div class="row">
 	<div class="col-12">
 		<div class="card mb-4">
-			<div class="card-header"><strong>Create New Project</strong></div>
+			<div class="card-header"><strong>Create new project</strong></div>
 			<div class="card-body">
 				<form asp-action="Create" method="post">
 
@@ -72,10 +47,10 @@
 							</div>
 						</div>
 					</div>
-					
+
 
 					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-						<button class="btn btn-primary me-md-2" type="submit">Create project</button>
+						<button class="btn btn-primary me-md-2" type="submit">Create</button>
 					</div>
 				</form>
 
@@ -83,3 +58,14 @@
 		</div>
 	</div>
 </div>
+
+@section Scripts {
+	<script>
+		tinymce.init({
+			selector: '#Description',
+			license_key: 'gpl',
+			branding: false,
+			promotion: false
+		});
+	</script>
+}
