@@ -10,10 +10,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Application.Interface;
 using Infrastructure.Services;
-using Mapster;
-using MapsterMapper;
-using System.Reflection;
 using Application.Services;
+using Application.Mappings;
+using Application.Mappings.Project;
 
 namespace Infrastructure
 {
@@ -52,14 +51,26 @@ namespace Infrastructure
             services.AddScoped<IIdentityService, IdentityService>();
             services.AddScoped<IUser, CurrentUser>();
 
-            services.AddSingleton(config =>
-            {
-                var configTa = new TypeAdapterConfig();
-                configTa.Scan(Assembly.GetExecutingAssembly());
-                return configTa;
-            });
 
-            services.AddScoped<IMapper, ServiceMapper>();
+            services.AddAutoMapper(typeof(ApplicationUserProfile));
+            services.AddAutoMapper(typeof(AttachmentProfile));
+            services.AddAutoMapper(typeof(AuditProfile));
+            services.AddAutoMapper(typeof(CommentProfile));
+            services.AddAutoMapper(typeof(LogProfile));
+            services.AddAutoMapper(typeof(NotificationProfile));
+            services.AddAutoMapper(typeof(ProjectProfile));
+            services.AddAutoMapper(typeof(TaskItemProfile));
+            services.AddAutoMapper(typeof(ProjectWithTaskCountProfile));
+
+            //services.AddSingleton(config =>
+            //{
+            //    var configTa = new TypeAdapterConfig();
+            //    configTa.Scan(Assembly.GetExecutingAssembly());
+
+            //    return configTa;
+            //});
+
+            //services.AddScoped<IMapper, ServiceMapper>();
 
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -67,9 +78,11 @@ namespace Infrastructure
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IProjectRepository, ProjectRepository>();
+            services.AddScoped<ITaskItemRepository, TaskItemRepository>();
 
 
             services.AddScoped<IProjectService, ProjectService>();
+            services.AddScoped<ITaskItemService, TaskItemService>();
 
             return services;
         }

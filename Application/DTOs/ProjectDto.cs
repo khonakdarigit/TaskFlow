@@ -12,5 +12,7 @@ namespace Application.DTOs
 
         // Navigation Properties
         public ApplicationUserDto Owner { get; set; } = null!;
+        public List<TaskItemDto> TaskItems { get; set; } = new List<TaskItemDto>();
+
     }
 }

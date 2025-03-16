@@ -1,4 +1,5 @@
 ﻿using Application.DTOs;
+using Application.DTOs.Project;
 using Application.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,7 +23,7 @@ namespace Web.Areas.ManageTask.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            List<ProjectDto> allProject = await _projectService.AllProjectAsync();
+            List<ProjectWithTaskCountDto> allProject = await _projectService.AllUserProjectWithTaskCountAsync(_user.Id);
             return View(allProject);
         }
 
@@ -57,7 +58,7 @@ namespace Web.Areas.ManageTask.Controllers
 
         public async Task<IActionResult> Details(Guid Id)
         {
-            ProjectDto project = await _projectService.GetProjectAsync(Id);
+            ProjectDto project = await _projectService.GetProjectWithDeatilsAsync(Id);
             return View(project);
         }
     }

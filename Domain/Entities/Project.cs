@@ -17,6 +17,6 @@ namespace Domain.Entities
 
         // Navigation Properties
         public ApplicationUser Owner { get; set; } = null!;
-        public ICollection<TaskItem> Tasks { get; set; } = new List<TaskItem>();
+        public ICollection<TaskItem> TaskItems { get; set; } = new List<TaskItem>();
     }
 }

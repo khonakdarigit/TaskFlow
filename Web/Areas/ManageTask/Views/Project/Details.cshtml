@@ -1,4 +1,5 @@
-﻿@model Application.DTOs.ProjectDto
+﻿@using Web.Helper
+@model Application.DTOs.ProjectDto
 
 @{
 	ViewData["Title"] = $"{Model.Name} details";
@@ -7,13 +8,22 @@
 <div>
 	<h4>@Model.Name</h4>
 	<span style="font-size:13px">ID:@Model.Id</span>
-	<p style="text-align:end">Start Date: @Model.StartDate</p>
+	<p style="text-align:end">Project start date: @Model.StartDate</p>
 	<hr />
 	<p>
 		@Html.Raw(Model.Description)
 	</p>
 </div>
 <div>
-	@Html.ActionLink("New Task", "NewTask", "Task", new { id = Model.Id }) |
-	<a asp-action="Index">Back to List</a>
+	@Html.ActionLink("New task item", "Create", "TaskItem", new { projectId = Model.Id }) 
 </div>
+
+@foreach (var item in Model.TaskItems)
+{
+	<div class="card mb-1">
+		<div class="card-body">
+			<h5 class="card-title">@item.Title</h5>
+			<p class="card-text">@Html.StripHtmlAndLimit(Model.Description)</p>
+		</div>
+	</div>
+}

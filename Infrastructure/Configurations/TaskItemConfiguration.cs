@@ -11,7 +11,7 @@ namespace Infrastructure.Configurations
 
             builder
                 .HasOne(t => t.Project)
-                .WithMany(p => p.Tasks)
+                .WithMany(p => p.TaskItems)
                 .HasForeignKey(t => t.ProjectId)
                 .OnDelete(DeleteBehavior.Cascade);
 

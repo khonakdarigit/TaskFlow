@@ -1,0 +1,82 @@
+﻿@using Domain.Enums
+@using Web.Helper
+@model Web.Areas.ManageTask.Models.CreateTaskItemViewModel
+
+@{
+	ViewData["Title"] = "Create new task item";
+	var priorityLevels = EnumHelper.GetSelectList<PriorityLevel>();
+	var taskStatuses = EnumHelper.GetSelectList<Domain.Enums.TaskStatus>();
+}
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="card mb-3">
+			<div class="card-header"><strong>Create new task item</strong></div>
+			<div class="card-body">
+				<form asp-action="Create">
+					<input asp-for="ProjectId" hidden class="form-control" />
+					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+					<div class="form-group">
+						<label asp-for="Title" class="control-label"></label>
+						<input asp-for="Title" class="form-control" />
+						<span asp-validation-for="Title" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="Description" class="control-label"></label>
+						<input asp-for="Description" class="form-control" />
+						<span asp-validation-for="Description" class="text-danger"></span>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label asp-for="StartDate" class="control-label"></label>
+								<input asp-for="StartDate" class="form-control" />
+								<span asp-validation-for="StartDate" class="text-danger"></span>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label asp-for="DueDate" class="control-label"></label>
+								<input asp-for="DueDate" class="form-control" />
+								<span asp-validation-for="DueDate" class="text-danger"></span>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="form-group col-md-6">
+							<label asp-for="Status" class="control-label"></label>
+							<select asp-for="Status" class="form-control" asp-items="@(new SelectList(taskStatuses, "Value", "Text"))"></select>
+							<span asp-validation-for="Status" class="text-danger"></span>
+						</div>
+						<div class="form-group col-md-6">
+							<label asp-for="Priority" class="control-label"></label>
+							<select asp-for="Priority" class="form-control" asp-items="@(new SelectList(priorityLevels, "Value", "Text"))"></select>
+							<span asp-validation-for="Priority" class="text-danger"></span>
+						</div>
+					</div>
+				
+					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+						<input type="submit" value="Create" class="btn btn-primary" />
+					</div>
+				</form>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+
+	<script>
+		tinymce.init({
+			selector: '#Description',
+			license_key: 'gpl',
+			branding: false,
+			promotion: false
+		});
+	</script>
+}

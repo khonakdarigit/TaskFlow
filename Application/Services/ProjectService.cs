@@ -1,8 +1,9 @@
 ﻿using Application.DTOs;
+using Application.DTOs.Project;
 using Application.Interface;
+using AutoMapper;
 using Domain.Entities;
 using Domain.Repositories;
-using MapsterMapper;
 
 namespace Application.Services
 {
@@ -24,6 +25,12 @@ namespace Application.Services
             return _mapper.Map<List<ProjectDto>>(allProjects);
         }
 
+        public async Task<List<ProjectWithTaskCountDto>> AllUserProjectWithTaskCountAsync(string userId)
+        {
+            var allProjects = await _projectRepository.AllUserProjectWithTaskCountAsync(userId);
+            return _mapper.Map<List<ProjectWithTaskCountDto>>(allProjects);
+        }
+
         public async Task<ProjectDto> CreateProjectAsync(ProjectDto projectDto)
         {
             var project = _mapper.Map<Project>(projectDto);
@@ -35,6 +42,12 @@ namespace Application.Services
         public async Task<ProjectDto> GetProjectAsync(Guid id)
         {
             var project = await _projectRepository.GetByIdAsync(id);
+            return _mapper.Map<ProjectDto>(project);
+        }
+
+        public async Task<ProjectDto> GetProjectWithDeatilsAsync(Guid id)
+        {
+            var project = await _projectRepository.GetProjectWithDeatilsByIdAsync(id);
             return _mapper.Map<ProjectDto>(project);
         }
     }
