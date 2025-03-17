@@ -5,6 +5,7 @@ namespace Application.DTOs
     public class TaskItemDto
     {
         public Guid Id { get; set; }
+        public int TaskNumber { get; set; }
         public string Title { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public DateTime StartDate { get; set; }

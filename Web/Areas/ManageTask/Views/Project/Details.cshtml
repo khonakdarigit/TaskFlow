@@ -14,16 +14,19 @@
 		@Html.Raw(Model.Description)
 	</p>
 </div>
-<div>
-	@Html.ActionLink("New task item", "Create", "TaskItem", new { projectId = Model.Id }) 
+
+<div class="d-grid gap-2 d-md-flex justify-content-md-end mb-2">
+	<a asp-action="Create" asp-controller="TaskItem" asp-route-projectId="@Model.Id" class="btn btn-primary me-md-2" type="button">New task item</a>
 </div>
 
 @foreach (var item in Model.TaskItems)
 {
 	<div class="card mb-1">
-		<div class="card-body">
-			<h5 class="card-title">@item.Title</h5>
-			<p class="card-text">@Html.StripHtmlAndLimit(Model.Description)</p>
+		<div class="card-body" style="padding:0.5rem">
+			<h5 class="card-title">
+				<a asp-controller="TaskItem" asp-action="Details" asp-route-Id="@item.Id">@($"#{item.TaskNumber}") @item.Title</a>
+			</h5>
+			<p class="card-text">@Html.StripHtmlAndLimit(Model.Description, 50)</p>
 		</div>
 	</div>
 }

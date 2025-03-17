@@ -1,4 +1,5 @@
-﻿using Application.DTOs;
+﻿using System.Threading.Tasks;
+using Application.DTOs;
 using Application.Interface;
 using AutoMapper;
 using Domain.Entities;
@@ -20,6 +21,8 @@ namespace Application.Services
 
         public async Task<TaskItemDto> CreateTaskItemAsync(TaskItemDto taskItemDto)
         {
+            taskItemDto.TaskNumber = _taskItemRepository.GetMaxTaskNumberInProject(taskItemDto.ProjectId) + 1;
+
             var taskItem = _mapper.Map<TaskItem>(taskItemDto);
             await _taskItemRepository.AddAsync(taskItem);
             await _taskItemRepository.SaveChangesAsync();
