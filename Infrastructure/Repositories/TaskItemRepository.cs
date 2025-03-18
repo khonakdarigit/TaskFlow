@@ -2,6 +2,7 @@
 using Domain.Repositories;
 using Infrastructure.Data;
 using Infrastructure.Repositories.Common;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
@@ -20,6 +21,13 @@ namespace Infrastructure.Repositories
                 .Where(c => c.ProjectId == projectId)
                 .Select(c => (int?)c.TaskNumber)
                 .Max() ?? 0;
+        }
+
+        public Task<TaskItem> GetTaskItemWithProjectAsync(Guid id)
+        {
+            return _context.Tasks
+                .Include(c => c.Project)
+                .FirstAsync(c => c.Id == id);
         }
     }
 }

@@ -6,15 +6,15 @@ namespace Domain.Enums
     public enum PriorityLevel
     {
         [Description("Low")]   
-        Low = 1,
+        Low = 0,
 
         [Description("Medium")]  
-        Medium = 2,
+        Medium = 1,
 
         [Description("High")]   
-        High = 3,
+        High = 2,
 
         [Description("Critical")]  
-        Critical = 4
+        Critical = 3
     }
 }

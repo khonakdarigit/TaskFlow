@@ -2,7 +2,7 @@
 @model Application.DTOs.ProjectDto
 
 @{
-	ViewData["Title"] = $"{Model.Name} details";
+	ViewData["Title"] = $"{Model.Name} | details";
 }
 
 <div>
@@ -24,7 +24,9 @@
 	<div class="card mb-1">
 		<div class="card-body" style="padding:0.5rem">
 			<h5 class="card-title">
-				<a asp-controller="TaskItem" asp-action="Details" asp-route-Id="@item.Id">@($"#{item.TaskNumber}") @item.Title</a>
+				<a asp-controller="TaskItem" asp-action="Details" asp-route-Id="@item.Id">@($"#{item.TaskNumber}") @item.Title
+					<i style="color:@($"{UIHelper.GetTaskStatusColor(item.Status)}")" class="bi bi-record-circle"></i>
+				</a>
 			</h5>
 			<p class="card-text">@Html.StripHtmlAndLimit(Model.Description, 50)</p>
 		</div>

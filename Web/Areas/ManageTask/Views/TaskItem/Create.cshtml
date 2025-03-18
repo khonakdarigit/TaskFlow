@@ -15,6 +15,9 @@
 			<div class="card-body">
 				<form asp-action="Create">
 					<input asp-for="ProjectId" hidden class="form-control" />
+					<input asp-for="Status" hidden class="form-control" />
+					<input asp-for="Priority" hidden class="form-control" />
+
 					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 					<div class="form-group">
 						<label asp-for="Title" class="control-label"></label>
@@ -26,7 +29,7 @@
 						<input asp-for="Description" class="form-control" />
 						<span asp-validation-for="Description" class="text-danger"></span>
 					</div>
-					<div class="row">
+@* 					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group">
 								<label asp-for="StartDate" class="control-label"></label>
@@ -54,7 +57,7 @@
 							<select asp-for="Priority" class="form-control" asp-items="@(new SelectList(priorityLevels, "Value", "Text"))"></select>
 							<span asp-validation-for="Priority" class="text-danger"></span>
 						</div>
-					</div>
+					</div> *@
 				
 					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 						<input type="submit" value="Create" class="btn btn-primary" />

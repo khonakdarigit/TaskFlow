@@ -1,72 +1,106 @@
-﻿@model Application.DTOs.TaskItemDto
+﻿@using Domain.Enums
+@using Web.Helper
+@model Application.DTOs.TaskItemDto
 
 @{
-    ViewData["Title"] = "Details";
+	ViewData["Title"] = @Model.Title;
+	var priorityLevels = EnumHelper.GetSelectList<PriorityLevel>();
+	var taskStatuses = EnumHelper.GetSelectList<Domain.Enums.TaskStatus>();
 }
+<div class="row">
+	<div class="col-md-8">
+		<h4>
+			<span style="color:#4e73df;font-size: 1.2rem;">@($"#{Model.TaskNumber}")</span>
+			@Model.Title <i style="color:@($"{UIHelper.GetTaskStatusColor(Model.Status)}")" class="bi bi-record-circle"></i>
+		</h4>
+		<p>Project: <a asp-controller="Project" asp-action="Details" asp-route-Id="@Model.ProjectId">@Html.StripHtmlAndLimit(Model.Project.Name, 50)</a></p>
 
-<h1>Details</h1>
+		<label asp-for="Title" class="control-label">Description:</label>
+		<div class="card">
+			<div class="card-body">
+				<p>
+					@Html.Raw(Model.Description)
+				</p>
+			</div>
+		</div>
+	</div>
 
-<div>
-    <h4>TaskItemDto</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.StartDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.StartDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DueDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DueDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Priority)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Priority)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProjectId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProjectId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AssignedUserId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AssignedUserId)
-        </dd>
-    </dl>
+	<div class="col-md-4">
+		<p>Start date time: @Model.StartDate</p>
+		<hr />
+
+		<p>Due date time: @(Model.DueDate?.ToString() ?? "Not set")</p>
+		<hr />
+
+
+		<div class="dropdown">
+			<span>Priority: </span>
+			<span data-coreui-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<a id="priority-link" href="#">@Model.Priority.GetDescription()</a>
+			</span>
+			<div class="dropdown-menu dropdown">
+				@foreach (var item in priorityLevels)
+				{
+					<a onclick="updatePriority(event,@item.Value)" class="dropdown-item" href="#">
+						@item.Text
+					</a>
+				}
+			</div>
+		</div>
+		<hr />
+
+		<div class="dropdown">
+			<span>Status: </span>
+			<span data-coreui-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<a id="status-link" href="#">@Model.Status.GetDescription()</a>
+			</span>
+			<div class="dropdown-menu dropdown">
+				@foreach (var item in taskStatuses)
+				{
+					<a onclick="updateStatus(event,@item.Value)" class="dropdown-item" href="#">
+						@item.Text
+					</a>
+				}
+			</div>
+		</div>
+		<hr />
+	</div>
 </div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+@section Scripts {
+	<script>
+
+			function updatePriority(event,selectedValue) {
+				event.preventDefault();
+				var taskItemId = '@Model.Id';
+				$.ajax({
+					url: '/ManageTask/TaskItem/UpdatePriority',
+					type: 'POST',
+					data: {taskItemId:taskItemId, newPriority: selectedValue },
+					success: function(response) {
+						document.getElementById("priority-link").innerText = response.updatedPriorityDescription;
+					},
+					error: function() {
+						alert("Error updating priority.");
+					}
+				});
+		}
+
+		function updateStatus(event,selectedValue) {
+				event.preventDefault();
+				var taskItemId = '@Model.Id';
+				$.ajax({
+					url: '/ManageTask/TaskItem/UpdateStatus',
+					type: 'POST',
+					data: {taskItemId: taskItemId, newStatus: selectedValue },
+					success: function(response) {
+						document.getElementById("status-link").innerText = response.updatedStatusDescription;
+					},
+					error: function() {
+						alert("Error updating status.");
+					}
+				});
+		}
+
+	</script>
+}

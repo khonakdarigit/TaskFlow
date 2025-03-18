@@ -1,9 +1,12 @@
 ﻿using Application.DTOs;
 using Application.Interface;
 using Application.Services;
+using Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Web.Areas.ManageTask.Models;
+using Web.Helper;
 
 namespace Web.Areas.ManageTask.Controllers
 {
@@ -57,9 +60,28 @@ namespace Web.Areas.ManageTask.Controllers
 
         public async Task<IActionResult> Details(Guid Id)
         {
-            TaskItemDto taskItem = await _taskItemService.GetTaskItemAsync(Id);
+            TaskItemDto taskItem = await _taskItemService.GetTaskItemWithProjectAsync(Id);
             return View(taskItem);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> UpdatePriorityAsync(Guid taskItemId, int newPriority)
+        {
+            TaskItemDto taskItem = await _taskItemService.GetTaskItemAsync(taskItemId);
+            taskItem.Priority = (PriorityLevel)newPriority;
+            await _taskItemService.UpdateTaskItemPriorityAsync(taskItem.Id,taskItem.Priority);
+
+            return Json(new { updatedPriorityDescription = taskItem.Priority.GetDescription() });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateStatusAsync(Guid taskItemId, int newStatus)
+        {
+            TaskItemDto taskItem = await _taskItemService.GetTaskItemAsync(taskItemId);
+            taskItem.Status = (Domain.Enums.TaskStatus)newStatus;
+            await _taskItemService.UpdateTaskItemStatusAsync(taskItem.Id, taskItem.Status);
+
+            return Json(new { updatedStatusDescription = taskItem.Status.GetDescription() });
+        }
     }
 }

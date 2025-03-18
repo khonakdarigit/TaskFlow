@@ -12,7 +12,7 @@ namespace Web.Areas.ManageTask.Models
         public string Title { get; set; } = string.Empty;
 
         [StringLength(1000, ErrorMessage = "Description cannot be longer than 1000 characters")]
-        public string Description { get; set; } = string.Empty;
+        public string? Description { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Start Date is required")]
         [DataType(DataType.Date)]

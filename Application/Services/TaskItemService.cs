@@ -3,6 +3,7 @@ using Application.DTOs;
 using Application.Interface;
 using AutoMapper;
 using Domain.Entities;
+using Domain.Enums;
 using Domain.Repositories;
 
 namespace Application.Services
@@ -33,6 +34,36 @@ namespace Application.Services
         {
             var taskItem = await _taskItemRepository.GetByIdAsync(id);
             return _mapper.Map<TaskItemDto>(taskItem);
+        }
+
+        public async Task<TaskItemDto> GetTaskItemWithProjectAsync(Guid id)
+        {
+            var taskItem = await _taskItemRepository.GetTaskItemWithProjectAsync(id);
+            return _mapper.Map<TaskItemDto>(taskItem);
+        }
+
+        public async Task<TaskItemDto> UpdateTaskItemAsync(TaskItemDto taskItemDto)
+        {
+            var taskItem = _mapper.Map<TaskItem>(taskItemDto);
+            _taskItemRepository.Update(taskItem);
+            await _taskItemRepository.SaveChangesAsync();
+            return _mapper.Map<TaskItemDto>(taskItem);
+        }
+
+        public async Task UpdateTaskItemPriorityAsync(Guid id, PriorityLevel priority)
+        {
+            var taskItem = await _taskItemRepository.GetByIdAsync(id);
+            taskItem.Priority = priority;
+            _taskItemRepository.Update(taskItem);
+            await _taskItemRepository.SaveChangesAsync();
+        }
+
+        public async Task UpdateTaskItemStatusAsync(Guid id, Domain.Enums.TaskStatus status)
+        {
+            var taskItem = await _taskItemRepository.GetByIdAsync(id);
+            taskItem.Status = status;
+            _taskItemRepository.Update(taskItem);
+            await _taskItemRepository.SaveChangesAsync();
         }
     }
 }
