@@ -42,19 +42,11 @@ namespace Application.Services
             return _mapper.Map<TaskItemDto>(taskItem);
         }
 
-        public async Task<TaskItemDto> UpdateTaskItemAsync(TaskItemDto taskItemDto)
-        {
-            var taskItem = _mapper.Map<TaskItem>(taskItemDto);
-            _taskItemRepository.Update(taskItem);
-            await _taskItemRepository.SaveChangesAsync();
-            return _mapper.Map<TaskItemDto>(taskItem);
-        }
-
+      
         public async Task UpdateTaskItemPriorityAsync(Guid id, PriorityLevel priority)
         {
             var taskItem = await _taskItemRepository.GetByIdAsync(id);
             taskItem.Priority = priority;
-            _taskItemRepository.Update(taskItem);
             await _taskItemRepository.SaveChangesAsync();
         }
 
@@ -62,8 +54,31 @@ namespace Application.Services
         {
             var taskItem = await _taskItemRepository.GetByIdAsync(id);
             taskItem.Status = status;
-            _taskItemRepository.Update(taskItem);
+            if (taskItem.Status == Domain.Enums.TaskStatus.Completed)
+            {
+                taskItem.DueDate = DateTime.Now;
+            }
+            else
+            {
+                taskItem.DueDate = null;
+            }
             await _taskItemRepository.SaveChangesAsync();
+        }
+
+        public async Task<TaskItemDto> UpdateTaskItemTitleAsync(Guid id, string newTitle)
+        {
+            var taskItem = await _taskItemRepository.GetByIdAsync(id);
+            taskItem.Title = newTitle;
+            await _taskItemRepository.SaveChangesAsync();
+            return _mapper.Map<TaskItemDto>(taskItem);
+        }
+
+        public async Task<TaskItemDto> UpdateDescriptionAsync(Guid taskItemId, string newDescription)
+        {
+            var taskItem = await _taskItemRepository.GetByIdAsync(taskItemId);
+            taskItem.Description = newDescription;
+            await _taskItemRepository.SaveChangesAsync();
+            return _mapper.Map<TaskItemDto>(taskItem);
         }
     }
 }

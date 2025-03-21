@@ -8,8 +8,9 @@ namespace Application.Interface
         Task<TaskItemDto> CreateTaskItemAsync(TaskItemDto project);
         Task<TaskItemDto> GetTaskItemAsync(Guid id);
         Task<TaskItemDto> GetTaskItemWithProjectAsync(Guid id);
-        Task<TaskItemDto> UpdateTaskItemAsync(TaskItemDto taskItem);
+        Task<TaskItemDto> UpdateDescriptionAsync(Guid taskItemId, string newDescription);
         Task UpdateTaskItemPriorityAsync(Guid id, PriorityLevel priority);
         Task UpdateTaskItemStatusAsync(Guid id, Domain.Enums.TaskStatus status);
+        Task<TaskItemDto> UpdateTaskItemTitleAsync(Guid id, string newTitle);
     }
 }

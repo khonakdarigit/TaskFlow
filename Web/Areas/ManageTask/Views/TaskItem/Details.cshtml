@@ -3,104 +3,226 @@
 @model Application.DTOs.TaskItemDto
 
 @{
-	ViewData["Title"] = @Model.Title;
-	var priorityLevels = EnumHelper.GetSelectList<PriorityLevel>();
-	var taskStatuses = EnumHelper.GetSelectList<Domain.Enums.TaskStatus>();
+    ViewData["Title"] = @Model.Title;
+    var priorityLevels = EnumHelper.GetSelectList<PriorityLevel>();
+    var taskStatuses = EnumHelper.GetSelectList<Domain.Enums.TaskStatus>();
 }
 <div class="row">
-	<div class="col-md-8">
-		<h4>
-			<span style="color:#4e73df;font-size: 1.2rem;">@($"#{Model.TaskNumber}")</span>
-			@Model.Title <i style="color:@($"{UIHelper.GetTaskStatusColor(Model.Status)}")" class="bi bi-record-circle"></i>
-		</h4>
-		<p>Project: <a asp-controller="Project" asp-action="Details" asp-route-Id="@Model.ProjectId">@Html.StripHtmlAndLimit(Model.Project.Name, 50)</a></p>
+    <div class="col-md-8">
 
-		<label asp-for="Title" class="control-label">Description:</label>
-		<div class="card">
-			<div class="card-body">
-				<p>
-					@Html.Raw(Model.Description)
-				</p>
-			</div>
-		</div>
-	</div>
+        <div class="card mb-3">
+            <div class="card-body">
+                <h4 id="titleViewBox">
+                    <span style="color:#4e73df;font-size: 1.2rem;">@($"#{Model.TaskNumber}")</span>
 
-	<div class="col-md-4">
-		<p>Start date time: @Model.StartDate</p>
-		<hr />
+                    <span id="titleText">
+                        @Model.Title
+                        <span><i style="color:@($"{UIHelper.GetTaskStatusColor(Model.Status)}")" class="bi bi-record-circle"></i></span>
 
-		<p>Due date time: @(Model.DueDate?.ToString() ?? "Not set")</p>
-		<hr />
+                        <button type="button" class="btn" onclick="showEditTitle()">
+                            <i class="bi bi-pen"></i>
+                        </button>
+                    </span>
+                    <span style="font-size:0.85rem;">
+                        Priority:
+                        <span style=" padding: 1px 4px; border-radius: 5px;color: white; background-color: @UIHelper.GetPriorityColor(Model.Priority)">@Model.Priority.GetDescription()</span>
+                    </span>
+                    <span style="font-size:0.85rem;">
+                        Status:
+                        <span style=" padding: 1px 4px; border-radius: 5px;color: white; background-color: @UIHelper.GetTaskStatusColor(Model.Status)">@Model.Status.GetDescription()</span>
+                    </span>
+                </h4>
+                <div id="editeTitleBox" class="mb-3" style="display:none">
+                    <div class="form-row">
+                        <div class="col-8">
+                            <input asp-for="Title" class="form-control" placeholder="Title" value="@Model.Title" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+                        <div class="col-2">
+                            <button onclick="updateTitle(event)" type="button" class="btn btn-primary btn-block">Save</button>
+                        </div>
+                        <div class="col-2">
+                            <button onclick="cancelEditTitle()" type="button" class="btn btn-primary btn-block">Cancel</button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <p>Project: <a asp-controller="Project" asp-action="Details" asp-route-Id="@Model.ProjectId">@Html.StripHtmlAndLimit(Model.Project.Name, 50)</a></p>
+                <hr />
+                <label asp-for="Title" class="control-label">Description:</label>
+                <div id="descriptionViewBox" style="display:block;">
+                    <span style="float:right">
+                        <button type="button" class="btn" onclick="showEditDescription()">
+                            <i class="bi bi-pen"></i>
+                        </button>
+                    </span>
+                    <span id="taskDescription">
+                        @Html.Raw(Model.Description)
+                    </span>
+                </div>
+                <div id="editDescritionBox" style="display:none">
+                    <div class="mb-2">
+                        <input asp-for="Description" class="form-control" value="@Model.Description" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button onclick="updateDescription(event)" class="btn btn-primary" type="button">Save</button>
+                        <button onclick="cancelEditDescription()" class="btn btn-primary" type="button">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4" style="font-size:0.85rem">
+        <p>Start date time: @Model.StartDate</p>
+        <hr />
+
+        <p>Due date time: @(Model.DueDate?.ToString() ?? "Not set")</p>
+        <hr />
 
 
-		<div class="dropdown">
-			<span>Priority: </span>
-			<span data-coreui-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				<a id="priority-link" href="#">@Model.Priority.GetDescription()</a>
-			</span>
-			<div class="dropdown-menu dropdown">
-				@foreach (var item in priorityLevels)
-				{
-					<a onclick="updatePriority(event,@item.Value)" class="dropdown-item" href="#">
-						@item.Text
-					</a>
-				}
-			</div>
-		</div>
-		<hr />
+        <div class="dropdown">
+            <span>Priority: </span>
+            <span data-coreui-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a id="priority-link" href="#">@Model.Priority.GetDescription()</a>
+            </span>
+            <div class="dropdown-menu dropdown">
+                @foreach (var item in priorityLevels)
+                {
+                    <a onclick="updatePriority(event,@item.Value)" class="dropdown-item" href="#">
+                        @item.Text
+                    </a>
+                }
+            </div>
+        </div>
+        <hr />
 
-		<div class="dropdown">
-			<span>Status: </span>
-			<span data-coreui-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				<a id="status-link" href="#">@Model.Status.GetDescription()</a>
-			</span>
-			<div class="dropdown-menu dropdown">
-				@foreach (var item in taskStatuses)
-				{
-					<a onclick="updateStatus(event,@item.Value)" class="dropdown-item" href="#">
-						@item.Text
-					</a>
-				}
-			</div>
-		</div>
-		<hr />
-	</div>
+        <div class="dropdown">
+            <span>Status: </span>
+            <span data-coreui-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a id="status-link" href="#">@Model.Status.GetDescription()</a>
+            </span>
+            <div class="dropdown-menu dropdown">
+                @foreach (var item in taskStatuses)
+                {
+                    <a onclick="updateStatus(event,@item.Value)" class="dropdown-item" href="#">
+                        @item.Text
+                    </a>
+                }
+            </div>
+        </div>
+        <hr />
+    </div>
 </div>
 
+
 @section Scripts {
-	<script>
+    <script>
 
-			function updatePriority(event,selectedValue) {
-				event.preventDefault();
-				var taskItemId = '@Model.Id';
-				$.ajax({
-					url: '/ManageTask/TaskItem/UpdatePriority',
-					type: 'POST',
-					data: {taskItemId:taskItemId, newPriority: selectedValue },
-					success: function(response) {
-						document.getElementById("priority-link").innerText = response.updatedPriorityDescription;
-					},
-					error: function() {
-						alert("Error updating priority.");
-					}
-				});
+        function updatePriority(event, selectedValue)
+        {
+			event.preventDefault();
+			var taskItemId = '@Model.Id';
+			$.ajax({
+				url: '/ManageTask/TaskItem/UpdatePriority',
+				type: 'POST',
+				data: {taskItemId: taskItemId, newPriority: selectedValue },
+				success: function(response) {
+					// document.getElementById("priority-link").innerText = response.updatedPriorityDescription;
+					location.reload();
+				},
+				error: function() {
+					alert("Error updating priority.");
+				}
+			});
 		}
 
-		function updateStatus(event,selectedValue) {
-				event.preventDefault();
-				var taskItemId = '@Model.Id';
-				$.ajax({
-					url: '/ManageTask/TaskItem/UpdateStatus',
-					type: 'POST',
-					data: {taskItemId: taskItemId, newStatus: selectedValue },
-					success: function(response) {
-						document.getElementById("status-link").innerText = response.updatedStatusDescription;
-					},
-					error: function() {
-						alert("Error updating status.");
-					}
-				});
+        function updateStatus(event, selectedValue)
+        {
+			event.preventDefault();
+			var taskItemId = '@Model.Id';
+			$.ajax({
+				url: '/ManageTask/TaskItem/UpdateStatus',
+				type: 'POST',
+				data: {taskItemId: taskItemId, newStatus: selectedValue },
+				success: function(response) {
+					// document.getElementById("status-link").innerText = response.updatedStatusDescription;
+					location.reload();
+				},
+				error: function() {
+								alert("Error updating status.");
+				}
+			});
 		}
 
-	</script>
+		function showEditTitle()
+		{
+			document.getElementById("titleViewBox").style.display="none";
+			document.getElementById("editeTitleBox").style.display="block";
+		}
+		function cancelEditTitle()
+		{
+			document.getElementById("titleViewBox").style.display="block";
+			document.getElementById("editeTitleBox").style.display="none";
+		}
+
+        function updateTitle(event)
+        {
+            event.preventDefault();
+            var taskItemId = '@Model.Id';
+            var inputTitle = document.getElementById("Title").value;
+            $.ajax({
+                url: '/ManageTask/TaskItem/UpdateTitle',
+	            type: 'POST',
+                data: { taskItemId: taskItemId, newTitle: inputTitle },
+	            success: function(response) {
+                    document.getElementById("titleText").innerText = response.updatedTitleDescription;
+                    cancelEditTitle();
+	            },
+	            error: function() {
+				    alert("Error updating title.");
+	            }
+            });
+        }
+
+        tinymce.init({
+            selector: '#Description',
+            license_key: 'gpl',
+            branding: false,
+            promotion: false
+        });
+
+        function showEditDescription()
+        {
+            document.getElementById("descriptionViewBox").style.display = "none";
+            document.getElementById("editDescritionBox").style.display = "block";
+        }
+        function cancelEditDescription()
+        {
+            document.getElementById("descriptionViewBox").style.display = "block";
+            document.getElementById("editDescritionBox").style.display = "none";
+        }
+
+        function updateDescription(event)
+        {
+            event.preventDefault();
+            var taskItemId = '@Model.Id';
+            var descriptionValue = tinymce.get("Description").getContent();
+            $.ajax({
+                url: '/ManageTask/TaskItem/UpdateDescription',
+	            type: 'POST',
+                data: { taskItemId: taskItemId, newDescription: descriptionValue },
+	            success: function(response) {
+                    document.getElementById("taskDescription").innerHTML = response.newDescription;
+                    cancelEditDescription();
+	            },
+	            error: function() {
+                    alert("Error updating description.");
+	            }
+            });
+        }
+
+    </script>
 }

@@ -2,33 +2,44 @@
 @model Application.DTOs.ProjectDto
 
 @{
-	ViewData["Title"] = $"{Model.Name} | details";
+    ViewData["Title"] = $"{Model.Name} | details";
 }
 
 <div>
-	<h4>@Model.Name</h4>
-	<span style="font-size:13px">ID:@Model.Id</span>
-	<p style="text-align:end">Project start date: @Model.StartDate</p>
-	<hr />
-	<p>
-		@Html.Raw(Model.Description)
-	</p>
+    <h4>@Model.Name</h4>
+    <span style="font-size:13px">ID:@Model.Id</span>
+    <p style="text-align:end">Project start date: @Model.StartDate</p>
+    <hr />
+    <p>
+        @Html.Raw(Model.Description)
+    </p>
 </div>
 
 <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-2">
-	<a asp-action="Create" asp-controller="TaskItem" asp-route-projectId="@Model.Id" class="btn btn-primary me-md-2" type="button">New task item</a>
+    <a asp-action="Create" asp-controller="TaskItem" asp-route-projectId="@Model.Id" class="btn btn-primary me-md-2" type="button">New task item</a>
 </div>
 
 @foreach (var item in Model.TaskItems)
 {
-	<div class="card mb-1">
-		<div class="card-body" style="padding:0.5rem">
-			<h5 class="card-title">
-				<a asp-controller="TaskItem" asp-action="Details" asp-route-Id="@item.Id">@($"#{item.TaskNumber}") @item.Title
-					<i style="color:@($"{UIHelper.GetTaskStatusColor(item.Status)}")" class="bi bi-record-circle"></i>
-				</a>
-			</h5>
-			<p class="card-text">@Html.StripHtmlAndLimit(Model.Description, 50)</p>
-		</div>
-	</div>
+    <div class="card mb-1">
+        <div class="card-body" style="padding:0.5rem">
+            <h5 class="card-title">
+                <a asp-controller="TaskItem" asp-action="Details" asp-route-Id="@item.Id">
+                    @($"#{item.TaskNumber}") @item.Title
+                    <i style="color:@($"{UIHelper.GetTaskStatusColor(item.Status)}")" class="bi bi-record-circle"></i>
+                </a>
+                <br />
+                <span style="font-size:0.85rem;">
+                    Priority:
+                    <span style=" padding: 1px 4px; border-radius: 5px;color: white; background-color: @UIHelper.GetPriorityColor(item.Priority)">@item.Priority.GetDescription()</span>
+                </span>
+                <span style="font-size:0.85rem;">
+                    Status:
+                    <span style=" padding: 1px 4px; border-radius: 5px;color: white; background-color: @UIHelper.GetTaskStatusColor(item.Status)">@item.Status.GetDescription()</span>
+                </span>
+            </h5>
+
+            <p class="card-text">@Html.StripHtmlAndLimit(item.Description, 50)</p>
+        </div>
+    </div>
 }

@@ -33,7 +33,7 @@ namespace Web.Helper
             switch (taskStatus)
             {
                 case Domain.Enums.TaskStatus.NotStarted:
-                    color = "#0098b1";
+                    color = "#c5c5c5";
                     break;
                 case Domain.Enums.TaskStatus.InProgress:
                     color = "#00874f";
@@ -45,7 +45,7 @@ namespace Web.Helper
                     color = "#cddb00";
                     break;
                 case Domain.Enums.TaskStatus.Canceled:
-                    color = "#939393";
+                    color = "#000000";
                     break;
                 default:
                     break;
