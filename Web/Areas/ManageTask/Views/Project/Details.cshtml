@@ -24,10 +24,11 @@
     <div class="card mb-1">
         <div class="card-body" style="padding:0.5rem">
             <h5 class="card-title">
+                <i style="color:@(item.Status==Domain.Enums.TaskStatus.Completed?UIHelper.GetPurpleColor():UIHelper.GetGreenColor())" class="bi bi-record-circle"></i>
                 <a asp-controller="TaskItem" asp-action="Details" asp-route-Id="@item.Id">
-                    @($"#{item.TaskNumber}") @item.Title
-                    <i style="color:@($"{UIHelper.GetTaskStatusColor(item.Status)}")" class="bi bi-record-circle"></i>
+                    @item.Title
                 </a>
+                <span style="font-size:0.85rem"> @($"#{item.TaskNumber}")</span>
                 <br />
                 <span style="font-size:0.85rem;">
                     Priority:
@@ -38,7 +39,6 @@
                     <span style=" padding: 1px 4px; border-radius: 5px;color: white; background-color: @UIHelper.GetTaskStatusColor(item.Status)">@item.Status.GetDescription()</span>
                 </span>
             </h5>
-
             <p class="card-text">@Html.StripHtmlAndLimit(item.Description, 50)</p>
         </div>
     </div>

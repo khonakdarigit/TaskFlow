@@ -16,15 +16,17 @@ namespace Infrastructure.Services
 
         public CurrentUser(
             IHttpContextAccessor httpContextAccessor,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            IMapper mapper)
         {
             _httpContextAccessor = httpContextAccessor;
             _userManager = userManager;
+            _mapper = mapper;
         }
 
         public string? Id => _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
         public string? Username => _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.Name);
         public string? Email => _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.Email);
-        public ApplicationUserDto AppUser => _mapper.Map<ApplicationUserDto>(_userManager.Users.FirstOrDefault(c => c.Id == Id));
+        public ApplicationUserDto AppUserDto => _mapper.Map<ApplicationUserDto>(_userManager.Users.First(c=>c.Id==Id));
     }
 }

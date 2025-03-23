@@ -1,5 +1,4 @@
 ﻿
-
 using Application.DTOs;
 
 namespace Application.Interface
@@ -9,6 +8,6 @@ namespace Application.Interface
         string? Id { get; }
         string Username { get; }
         string Email { get; }
-        public ApplicationUserDto AppUser { get; }
+        public ApplicationUserDto AppUserDto { get; }
     }
 }

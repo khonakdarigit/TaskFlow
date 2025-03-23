@@ -13,11 +13,10 @@
         <div class="card mb-3">
             <div class="card-body">
                 <h4 id="titleViewBox">
-                    <span style="color:#4e73df;font-size: 1.2rem;">@($"#{Model.TaskNumber}")</span>
 
                     <span id="titleText">
                         @Model.Title
-                        <span><i style="color:@($"{UIHelper.GetTaskStatusColor(Model.Status)}")" class="bi bi-record-circle"></i></span>
+                        <span style="color:#4e73df;">@($"#{Model.TaskNumber}")</span>
 
                         <button type="button" class="btn" onclick="showEditTitle()">
                             <i class="bi bi-pen"></i>
@@ -30,6 +29,16 @@
                     <span style="font-size:0.85rem;">
                         Status:
                         <span style=" padding: 1px 4px; border-radius: 5px;color: white; background-color: @UIHelper.GetTaskStatusColor(Model.Status)">@Model.Status.GetDescription()</span>
+                    </span>
+                    <br />
+                    <span style="
+                        color:white;background-color:@(Model.Status==Domain.Enums.TaskStatus.Completed?UIHelper.GetPurpleColor():UIHelper.GetGreenColor());
+                        padding: 1px 5px;
+                        border-radius: 10px;
+                        font-size: 1.3rem;">
+
+                        <span>@(Model.Status==Domain.Enums.TaskStatus.Completed?"Closed":"Open")</span>
+                        <i class="bi bi-record-circle"></i>
                     </span>
                 </h4>
                 <div id="editeTitleBox" class="mb-3" style="display:none">
@@ -116,7 +125,9 @@
         <hr />
     </div>
 </div>
+<div class="col-md-12">
 
+</div>
 
 @section Scripts {
     <script>

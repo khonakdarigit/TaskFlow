@@ -52,5 +52,14 @@ namespace Web.Helper
             }
             return color;
         }
+
+        public static string GetGreenColor()
+        {
+            return "#00874f";
+        }
+        public static string GetPurpleColor()
+        {
+            return "#861ebb";
+        }
     }
 }

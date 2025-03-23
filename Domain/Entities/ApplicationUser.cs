@@ -10,9 +10,9 @@ namespace Domain.Entities
         public DateTimeOffset UpdatedAt { get; set; }
 
         // Navigation properties
-        public ICollection<Log> Logs { get; set; }
-        public ICollection<Notification> Notifications { get; set; }
-        public ICollection<Audit> Audits { get; set; }
+        public ICollection<Log> Logs { get; set; } = new List<Log>();
+        public ICollection<Notification> Notifications { get; set; } = new List<Notification>();
+        public ICollection<Audit> Audits { get; set; } = new List<Audit>();
         // Navigation Properties
         public ICollection<Project> OwnedProjects { get; set; } = new List<Project>();
         public ICollection<TaskItem> AssignedTasks { get; set; } = new List<TaskItem>();
