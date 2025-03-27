@@ -8,6 +8,9 @@ namespace Application.Interface
         string? Id { get; }
         string Username { get; }
         string Email { get; }
-        public ApplicationUserDto AppUserDto { get; }
+        public ApplicationUserDto AppUser { get; set; }
+
+        Task UpdateAppUser(ApplicationUserDto applicationUserDto);
+        Task UpdateAppUserPic(string picUrl);
     }
 }

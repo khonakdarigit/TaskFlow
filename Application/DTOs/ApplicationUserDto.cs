@@ -1,12 +1,13 @@
-﻿using Domain.Entities;
-
-namespace Application.DTOs
+﻿namespace Application.DTOs
 {
     public class ApplicationUserDto
     {
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
         public string? ProfilePictureUrl { get; set; }
         public DateTimeOffset? CreatedAt { get; set; }
         public DateTimeOffset? UpdatedAt { get; set; }
+        public string FullName { get { return $"{FirstName} {LastName}"; } }
 
         // Navigation properties
         public List<LogDto> Logs { get; set; } = new List<LogDto>();

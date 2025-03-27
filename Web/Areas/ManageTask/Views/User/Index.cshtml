@@ -4,33 +4,53 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+
+<h1>@Model.</h1>
 
 <div>
     <h4>ApplicationUserDto</h4>
     <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProfilePictureUrl)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProfilePictureUrl)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreatedAt)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UpdatedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UpdatedAt)
-        </dd>
-    </dl>
 </div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+
+<form asp-action="UploadProfilePicture" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="profilePicture">تصویر پروفایل</label>
+        <input type="file" id="profilePicture" name="profilePicture" accept="image/*" class="form-control" />
+    </div>
+    <div class="form-group">
+        <img id="imagePreview" src="#" alt="تصویر پروفایل" style="max-width: 200px; height:200px display: none;" />
+    </div>
+    <input type="hidden" id="croppedImage" name="croppedImage" />
+    <button type="submit" class="btn btn-primary">ذخیره</button>
+</form>
+
+
+
+@section Scripts {
+    <script>
+        document.getElementById('profilePicture').addEventListener('change', function (e) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('imagePreview').style.display = 'block';
+                document.getElementById('imagePreview').src = e.target.result;
+
+                var cropper = new Cropper(document.getElementById('imagePreview'), {
+                    aspectRatio: 1, // نسبت تصویر مربعی
+                    viewMode: 1,
+                    autoCropArea: 1,
+                    crop: function (event) {
+                        var canvas = cropper.getCroppedCanvas({
+                            width: 200,
+                            height: 200
+                        });
+                        document.getElementById('croppedImage').value = canvas.toDataURL('image/jpeg');
+                    }
+                });
+            };
+            reader.readAsDataURL(e.target.files[0]);
+        });
+    </script>
+}

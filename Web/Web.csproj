@@ -24,6 +24,7 @@
 
 	<ItemGroup>
 		<Folder Include="Areas\ManageTask\Data\" />
+		<Folder Include="wwwroot\img\profiles\" />
 	</ItemGroup>
 
 	<ItemGroup>

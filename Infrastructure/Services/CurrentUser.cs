@@ -22,11 +22,36 @@ namespace Infrastructure.Services
             _httpContextAccessor = httpContextAccessor;
             _userManager = userManager;
             _mapper = mapper;
-        }
 
+        }
         public string? Id => _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
         public string? Username => _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.Name);
         public string? Email => _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.Email);
-        public ApplicationUserDto AppUserDto => _mapper.Map<ApplicationUserDto>(_userManager.Users.First(c=>c.Id==Id));
+        public ApplicationUserDto AppUser
+        {
+            get
+            {
+                return _mapper.Map<ApplicationUserDto>(_userManager.Users.First(c => c.Id == Id));
+            }
+            set
+            {
+                AppUser = value;
+            }
+        }
+
+        public async Task UpdateAppUser(ApplicationUserDto applicationUserDto)
+        {
+            var user = _userManager.Users.First(c => c.Id == Id);
+            user.FirstName = applicationUserDto.FirstName;
+            user.LastName = applicationUserDto.LastName;
+            await _userManager.UpdateAsync(user);
+        }
+
+        public async Task UpdateAppUserPic(string picUrl)
+        {
+            var user = _userManager.Users.First(c => c.Id == Id);
+            user.ProfilePictureUrl = picUrl;
+            await _userManager.UpdateAsync(user);
+        }
     }
 }
